@@ -12,18 +12,20 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 import sys
+import shutil
 
 # Video Downloader
 url = input("Enter URL:")
-address = pytube.YouTube(url).streams.get_highest_resolution().download()
+os.mkdir("temp")
+address = pytube.YouTube(url).streams.get_highest_resolution().download("temp")
 
 # Video 2 Audio Converter
 audio = mp.VideoFileClip(address)
-audio.audio.write_audiofile("Audio.mp3")
+audio.audio.write_audiofile("temp\Audio.mp3")
 
 # Transcriber
 r = sr.Recognizer()
-path = "Audio.mp3"
+path = "temp\Audio.mp3"
 # Spliting audio file into chunks & applying speech recognition
 def get_large_audio_transcription(path):
     # Opening the audio file using pydub
@@ -61,3 +63,6 @@ def get_large_audio_transcription(path):
 sys.stdout = open("transcribe.txt", "w")
 print('\nFull text:', get_large_audio_transcription(path))
 sys.stdout.close()
+
+shutil.rmtree("temp")
+shutil.rmtree(folder_name)
