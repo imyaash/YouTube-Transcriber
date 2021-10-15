@@ -1,3 +1,3 @@
 @echo off
-python "YTTranscriber.py"
+python "script\YTTranscriber.py"
 pause
