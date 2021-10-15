@@ -1,0 +1,6 @@
+pytube
+pydub
+moviepy
+SpeechRecognition
+os
+sys
